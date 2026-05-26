@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>QR Scanner</title>
+  <script src="https://unpkg.com/html5-qrcode"></script>
+  <style>
+    body { font-family: Arial; text-align: center; padding: 20px; }
+    #reader { width: 100%; max-width: 400px; margin: auto; }
+    #result { margin-top: 20px; font-size: 18px; color: green; }
+  </style>
+</head>
+<body>
+  <h2>QR Code Scanner</h2>
+  <div id="reader"></div>
+  <div id="result">Camera on kara, QR dakhav</div>
+
+  <script>
+    function onScanSuccess(decodedText) {
+      document.getElementById("result").innerHTML = "Scanned: " + decodedText;
+    }
+    
+    let html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 });
+    html5QrcodeScanner.render(onScanSuccess);
+  </script>
+</body>
+</html>
