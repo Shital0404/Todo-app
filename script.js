@@ -1,36 +1,26 @@
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-
-function saveTasks() {
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-}
-
-function renderTasks() {
-  const list = document.getElementById("taskList");
-  list.innerHTML = "";
-  tasks.forEach((task, index) => {
-    const li = document.createElement("li");
-    li.textContent = task;
-    const delBtn = document.createElement("button");
-    delBtn.textContent = "Delete";
-    delBtn.onclick = () => {
-      tasks.splice(index, 1);
-      saveTasks();
-      renderTasks();
-    };
-    li.appendChild(delBtn);
-    list.appendChild(li);
-  });
-}
-
-function addTask() {
-  const input = document.getElementById("taskInput");
+function addTodo() {
+  const input = document.querySelector('input');
   const task = input.value.trim();
-  if (task) {
-    tasks.push(task);
-    saveTasks();
-    renderTasks();
-    input.value = "";
-  }
+  
+  if (task === '') return;
+  
+  const todoList = document.getElementById('todo-list');
+  
+  const todoItem = document.createElement('div');
+  todoItem.className = 'todo-item';
+  todoItem.innerHTML = `
+    <span>${task}</span>
+    <button onclick="this.parentElement.remove()">Delete</button>
+  `;
+  
+  todoList.appendChild(todoItem);
+  input.value = '';
 }
 
-renderTasks();
+// Add button la click event dya
+document.querySelector('button').addEventListener('click', addTodo);
+
+// Enter dabaun suddha add hoil
+document.querySelector('input').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') addTodo();
+});
