@@ -41,3 +41,28 @@ button {
   cursor: pointer;
   font-size: 16px;
 }
+
+button:hover {
+  background-color: #45a049;
+}
+
+.todo-item {
+  background: white;
+  padding: 10px 15px;
+  margin: 10px auto;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px; /* space between text and Delete button */
+  max-width: 400px;
+}
+
+.todo-item button {
+  background-color: #f44336;
+  padding: 5px 15px;
+}
+
+.todo-item button:hover {
+  background-color: #da190b;
+}
