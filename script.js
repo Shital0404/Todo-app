@@ -1,5 +1,5 @@
 let tasks = [];
-let currentFilter = 'all';
+let currentFilter = 'PENDING';
 
 function addTask() {
     const taskText = document.getElementById('taskInput').value;
