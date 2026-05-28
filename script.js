@@ -4,7 +4,11 @@ let currentFilter = 'pending';
 function addTask() {
     const taskText = document.getElementById('taskInput').value;
     const time = document.getElementById('timeInput').value;
-    if(taskText === '') return;
+    
+    if(taskText === '') {
+        alert('Task liha!');
+        return;
+    }
 
     tasks.push({ text: taskText, time: time, completed: false });
     document.getElementById('taskInput').value = '';
@@ -39,7 +43,7 @@ function displayTasks(filter) {
         const actualIndex = tasks.indexOf(task);
         let deleteBtn = '';
         if(task.completed) {
-            deleteBtn = `<button onclick="deleteTask(${actualIndex})" style="margin-left:10px; background:red; padding:5px 10px;">Delete</button>`;
+            deleteBtn = `<button onclick="deleteTask(${actualIndex})" style="margin-left:10px; background:red; padding:5px 10px; color:white; border:none;">Delete</button>`;
         }
 
         list.innerHTML += `
