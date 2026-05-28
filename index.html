@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>My Todo List</h1>
-    <div class="input-area">
-      <input type="text" placeholder="Add new task">
-      <button>Add</button>
+    <div class="container">
+        <h1>My Todo List</h1>
+        <div class="input-area">
+            <input type="text" id="taskInput" placeholder="Add new task">
+            <input type="date" id="dateInput">
+            <button onclick="addTask()">Add</button>
+        </div>
+
+        <div style="margin:15px 0;">
+            <button onclick="filterTasks('all')">All</button>
+            <button onclick="filterTasks('pending')">Pending</button>
+            <button onclick="filterTasks('completed')">Completed</button>
+        </div>
+
+        <div id="todo-list" class="todo-list"></div>
     </div>
-    <div id="todo-list"></div>
-  </div>
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
