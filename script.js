@@ -1,19 +1,24 @@
 let tasks = [];
-let currentFilter = 'PENDING';
+let currentFilter = 'pending';
 
 function addTask() {
     const taskText = document.getElementById('taskInput').value;
-    const dueDate = document.getElementById('dateInput').value;
+    const time = document.getElementById('timeInput').value;
     if(taskText === '') return;
 
-    tasks.push({ text: taskText, dueDate: dueDate, completed: false });
+    tasks.push({ text: taskText, time: time, completed: false });
     document.getElementById('taskInput').value = '';
-    document.getElementById('dateInput').value = '';
+    document.getElementById('timeInput').value = '';
     displayTasks(currentFilter);
 }
 
 function toggleTask(index) {
     tasks[index].completed =!tasks[index].completed;
+    displayTasks(currentFilter);
+}
+
+function deleteTask(index) {
+    tasks.splice(index, 1);
     displayTasks(currentFilter);
 }
 
@@ -32,11 +37,17 @@ function displayTasks(filter) {
 
     filteredTasks.forEach((task, index) => {
         const actualIndex = tasks.indexOf(task);
+        let deleteBtn = '';
+        if(task.completed) {
+            deleteBtn = `<button onclick="deleteTask(${actualIndex})" style="margin-left:10px; background:red; padding:5px 10px;">Delete</button>`;
+        }
+
         list.innerHTML += `
         <div class="todo-item ${task.completed? 'completed' : ''}">
             <input type="checkbox" ${task.completed? 'checked' : ''} onclick="toggleTask(${actualIndex})">
             <span>${task.text}</span>
-            ${task.dueDate? `<span class="due-date">Due: ${task.dueDate}</span>` : ''}
+            ${task.time? `<span class="time">Time: ${task.time}</span>` : ''}
+            ${deleteBtn}
         </div>`;
     });
 }
