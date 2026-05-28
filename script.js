@@ -1,26 +1,42 @@
-function addTodo() {
-  const input = document.querySelector('input');
-  const task = input.value.trim();
-  
-  if (task === '') return;
-  
-  const todoList = document.getElementById('todo-list');
-  
-  const todoItem = document.createElement('div');
-  todoItem.className = 'todo-item';
-  todoItem.innerHTML = `
-    <span>${task}</span>
-    <button onclick="this.parentElement.remove()">Delete</button>
-  `;
-  
-  todoList.appendChild(todoItem);
-  input.value = '';
+let tasks = [];
+let currentFilter = 'all';
+
+function addTask() {
+    const taskText = document.getElementById('taskInput').value;
+    const dueDate = document.getElementById('dateInput').value;
+    if(taskText === '') return;
+
+    tasks.push({ text: taskText, dueDate: dueDate, completed: false });
+    document.getElementById('taskInput').value = '';
+    document.getElementById('dateInput').value = '';
+    displayTasks(currentFilter);
 }
 
-// Add button la click event dya
-document.querySelector('button').addEventListener('click', addTodo);
+function toggleTask(index) {
+    tasks[index].completed =!tasks[index].completed;
+    displayTasks(currentFilter);
+}
 
-// Enter dabaun suddha add hoil
-document.querySelector('input').addEventListener('keypress', function(e) {
-  if (e.key === 'Enter') addTodo();
-});
+function filterTasks(filter) {
+    currentFilter = filter;
+    displayTasks(filter);
+}
+
+function displayTasks(filter) {
+    const list = document.getElementById('todo-list');
+    list.innerHTML = '';
+
+    let filteredTasks = tasks;
+    if(filter === 'pending') filteredTasks = tasks.filter(t =>!t.completed);
+    if(filter === 'completed') filteredTasks = tasks.filter(t => t.completed);
+
+    filteredTasks.forEach((task, index) => {
+        const actualIndex = tasks.indexOf(task);
+        list.innerHTML += `
+        <div class="todo-item ${task.completed? 'completed' : ''}">
+            <input type="checkbox" ${task.completed? 'checked' : ''} onclick="toggleTask(${actualIndex})">
+            <span>${task.text}</span>
+            ${task.dueDate? `<span class="due-date">Due: ${task.dueDate}</span>` : ''}
+        </div>`;
+    });
+}
